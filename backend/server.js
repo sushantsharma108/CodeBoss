@@ -1,14 +1,17 @@
-const express = require('express');
+const express = require("express");
 const app = express();
+const router = require("./router/auth-router");
+app.use("/api/auth", router); // if we're using it then we don't need to use the below app.get routes.
+// application will use the defined router above and will directly go to the auth-router file on execution
 
-app.get('/', (req, res) => {
-    res.status(200).send('Hello, We are going to learn the MERN Stack and hum usme fod denge!!!...');
-});
-app.get('/login', (req, res) => {
-    res.status(200).send('Hello, We are going to login into platform...');
-});
+// app.get('/', (req, res) => {
+//     res.status(200).send('Hello, We are going to learn the MERN Stack and hum usme fod denge!!!...');
+// });
+// app.get('/login', (req, res) => {
+//     res.status(200).send('Hello, We are going to login into platform...');
+// });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
