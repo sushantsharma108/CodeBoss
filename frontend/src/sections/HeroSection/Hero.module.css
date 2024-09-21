@@ -1,0 +1,45 @@
+.main{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+.left {
+  width: 55%;
+  height: 100%;
+  padding: 2vw 5vw;
+}
+.left h1 {
+  font-size: 4vw;
+}
+.left h1 span {
+  color: #963bd3;
+}
+.left p {
+  font-size: 1.5vw;
+  width: 95%;
+  margin-top: 2vw;
+  margin-bottom: 3vw;
+}
+.left button {
+  font-size: 2vw;
+  padding: 1vw 2vw;
+  border: none;
+  border-radius: 2.5vw;
+  background-color: #963bd3;
+  color: #fff;
+}
+.right {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: darkgray;
+}
+.right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

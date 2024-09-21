@@ -1,0 +1,44 @@
+.container {
+  font-size: 20px;
+  height: 100px;
+  width: 100%;
+  padding: 0 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #dadada;
+}
+
+.container h2 {
+  font-size: 2vw;
+  font-weight: 600;
+}
+.container h2 img {
+  height: 5.5vw;
+  width: 6vw;
+  border-radius: 50px;
+}
+.container h4 {
+  font-size: 1.5vw;
+  font-weight: 600;
+  cursor: pointer;
+}
+.container i {
+  font-size: 1.5vw;
+  font-weight: 600;
+  display: none;
+}
+.navPart2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4vw;
+}
+.navPart2 button {
+  font-size: 1.5vw;
+  padding: 0.5vw 1.5vw;
+  border-radius: 1.5vw;
+  background-color: #963bd3;
+  color: #fff;
+  border: none;
+}
