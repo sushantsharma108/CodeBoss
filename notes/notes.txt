@@ -1,0 +1,9 @@
+a. Controllers: In an express app , a controller refers to the part of your code that is responsible for handling the app's logic. Controllers are typically used to process incoming requests, interact with models(data sources) and send responses back to the clients. They help organize your application by separating concerns and following the MVC(Model View Controller) design pattern.
+
+1 => action: "action" is the description of what you want to do , while "dispatch" is the function that carries out that action.
+
+2 => controllers me async logic likhte hain to try catch use karna chahiye, otherwise we can use the express sync package.
+
+3 => jo bhi variable controller.js me banayenge unhe import ya require kar sakte hain auth-router.js me and code aur bgi chhota ho jata hai bcz just likhna hota h--> router.route("/").get(home);
+
+4 => Jab data ko add karna ho DB me tab POST req karo aur saath me res.status(code).json({message:"message likho yaha par});
