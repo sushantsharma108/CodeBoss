@@ -1,5 +1,5 @@
 const User = require("../models/user-model"); // imported the collection
-
+const bcrypt = require("bcryptjs"); // to hash the password
 // Home page logic:
 const home = async (req, res) => {
   try {
@@ -24,7 +24,11 @@ const register = async (req, res) => {
     if (userExists) {
       return res.status(400).json({ message: "Email already exists" });
     }
-    const userCreated = await User.create({ username, email, phone, password }); // if user doesn't exist then create...
+    // // hash the password: Below method is the 1st one to hash the pwd and 2nd one is showed in user-model.js
+    // const saltRound = 10;
+    // const hash_password = await bcrypt.hash(password, saltRound); 
+
+    const userCreated = await User.create({ username, email, phone, password}); // if user doesn't exist then create...
     res.status(200).json({ msg: userCreated }); //data is username, email, phone, password
   } catch (error) {
     console.error(error);
@@ -32,5 +36,4 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = {home, register};
-
+module.exports = { home, register };
