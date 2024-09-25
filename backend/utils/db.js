@@ -1,6 +1,5 @@
+// require('dotenv').config();
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config()
 // const URI = "mongodb://127.0.0.1:27017/";
 // Connect to MongoDB
 const connectDB = async () => {
@@ -9,7 +8,7 @@ const connectDB = async () => {
     console.log("MongoDB connected...");
   } catch (error) {
     console.error(`Error connecting to MongoDB: ${error.message}`);
-    process.exit(1);
+    process.exit(0);
   }
 };
 module.exports = connectDB;
