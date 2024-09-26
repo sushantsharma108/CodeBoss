@@ -24,6 +24,29 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Hashing the password: Using pre method
+userSchema.pre("save", async function (next) {
+  // console.log("Pre data ", this);
+  const user = this;
+  // if password has not been modified, then:
+  if (!user.isModified("password")) {
+    next();
+  }
+  // if password has been modified, then:
+  try {
+    const saltRound = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(user.password, saltRound);
+    user.password = hashedPassword;
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Password conmparison for Login functionality: using userSchema.methods.func_name / custom function
+userSchema.methods.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.password); // password is the incoming password from user request & this.password is the hashed password in database
+};
+
 // JWT - JSON Web Token: generating jwt using Instance method
 // we can create multiple functions using userSchema.methods.func_name() like we did below and use them in any individual file in backend.
 userSchema.methods.generateToken = async function () {
@@ -44,23 +67,8 @@ userSchema.methods.generateToken = async function () {
     console.error(error);
   }
 };
-// Hashing the password: Using pre method
-userSchema.pre("save", async function (next) {
-  // console.log("Pre data ", this);
-  const user = this;
-  // if password has not been modified, then:
-  if (!user.isModified("password")) {
-    next();
-  }
-  // if password has been modified, then:
-  try {
-    const saltRound = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(user.password, saltRound);
-    user.password = hashedPassword;
-  } catch (error) {
-    next(error);
-  }
-});
+
 // Define the model or collection name:
 const User = new mongoose.model("Users", userSchema); // 1st param hai collection name joki db me add hone k baad apne aap users ban jayega & doosra hai schema name
+
 module.exports = User;
