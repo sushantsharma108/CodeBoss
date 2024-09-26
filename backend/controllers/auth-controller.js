@@ -43,4 +43,29 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { home, register };
+// Implementation of Login Logic:
+// 1. Get login data: retrieve user data (email, password)
+// 2. Check email existence: check if email exists
+// 3. Check password: compare the hashed password with the hashed input password
+// 4. Generate JWT token: generate a JWT token that will be used for authorization
+// 5. Respond: respond with "Login successful" or handle errors
+const login = async (req, res) => { 
+  const { email, password } = req.body;
+  const userExists = await User.findOne({ email: email });
+  if (!userExists) {
+    return res.status(400).json({ message: "Invalid Credentials" });
+  }
+  const isMatch = await userExists.comparePassword(password);
+  if (!isMatch) {
+    return res.status(401).json({ message: "Invalid Email or Password" });
+  }
+  if (isMatch) {
+    res.status(200).json({
+      msg: "Logged in successfully",
+      token: await userExists.generateToken(),
+      userId: userExists._id.toString(),
+    });
+  }
+}
+
+module.exports = { home, register, login };
