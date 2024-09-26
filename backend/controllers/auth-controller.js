@@ -24,12 +24,12 @@ const register = async (req, res) => {
     if (userExists) {
       return res.status(400).json({ message: "Email already exists" });
     }
-    // // hash the password: Below method is the 1st one to hash the pwd and 2nd one is showed in user-model.js
+    // Hash the password: Below method is the 1st one to hash the pwd and 2nd one is showed in user-model.js
     // const saltRound = 10;
     // const hash_password = await bcrypt.hash(password, saltRound); 
 
     const userCreated = await User.create({ username, email, phone, password}); // if user doesn't exist then create...
-    res.status(200).json({ msg: userCreated }); //data is username, email, phone, password
+    res.status(201).json({ msg: userCreated }); //data is username, email, phone, password
   } catch (error) {
     console.error(error);
     res.status(500).json("Internal Server Error");
