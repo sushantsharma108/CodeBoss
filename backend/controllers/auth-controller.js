@@ -26,10 +26,17 @@ const register = async (req, res) => {
     }
     // Hash the password: Below method is the 1st one to hash the pwd and 2nd one is showed in user-model.js
     // const saltRound = 10;
-    // const hash_password = await bcrypt.hash(password, saltRound); 
+    // const hash_password = await bcrypt.hash(password, saltRound);
 
-    const userCreated = await User.create({ username, email, phone, password}); // if user doesn't exist then create...
-    res.status(201).json({ msg: userCreated }); //data is username, email, phone, password
+    const userCreated = await User.create({ username, email, phone, password }); // if user doesn't exist then create...
+    res
+      .status(201)
+      .json({
+        // msg: userCreated,
+        msg: "Registration Successful",
+        token: await userCreated.generateToken(),
+        userId: userCreated._id.toString(),
+      }); //data is username, email, phone, password & token is JWt token which is passed by the server to the client side in cookies/localstorage.
   } catch (error) {
     console.error(error);
     res.status(500).json("Internal Server Error");
