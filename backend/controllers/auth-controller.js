@@ -29,17 +29,17 @@ const register = async (req, res) => {
     // const hash_password = await bcrypt.hash(password, saltRound);
 
     const userCreated = await User.create({ username, email, phone, password }); // if user doesn't exist then create...
-    res
-      .status(201)
-      .json({
-        // msg: userCreated,
-        msg: "Registration Successful",
-        token: await userCreated.generateToken(),
-        userId: userCreated._id.toString(),
-      }); //data is username, email, phone, password & token is JWt token which is passed by the server to the client side in cookies/localstorage.
-  } catch (error) {
+    res.status(201).json({
+      // msg: userCreated,
+      msg: "Registration Successful",
+      token: await userCreated.generateToken(),
+      userId: userCreated._id.toString(),
+    }); //data is username, email, phone, password & token is JWt token which is passed by the server to the client side in cookies/localstorage.
+  } 
+  catch (error) {
     console.error(error);
-    res.status(500).json("Internal Server Error");
+    // res.status(500).json("Internal Server Error");
+    next(error);
   }
 };
 
@@ -49,23 +49,27 @@ const register = async (req, res) => {
 // 3. Check password: compare the hashed password with the hashed input password
 // 4. Generate JWT token: generate a JWT token that will be used for authorization
 // 5. Respond: respond with "Login successful" or handle errors
-const login = async (req, res) => { 
-  const { email, password } = req.body;
-  const userExists = await User.findOne({ email: email });
-  if (!userExists) {
-    return res.status(400).json({ message: "Invalid Credentials" });
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const userExists = await User.findOne({ email: email });
+    if (!userExists) {
+      return res.status(400).json({ message: "Invalid Credentials" });
+    }
+    const isMatch = await userExists.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid Email or Password" });
+    }
+    if (isMatch) {
+      res.status(200).json({
+        msg: "Logged in successfully",
+        token: await userExists.generateToken(),
+        userId: userExists._id.toString(),
+      });
+    }
+  } catch (err) {
+    res.status(400).json({msg: message});
   }
-  const isMatch = await userExists.comparePassword(password);
-  if (!isMatch) {
-    return res.status(401).json({ message: "Invalid Email or Password" });
-  }
-  if (isMatch) {
-    res.status(200).json({
-      msg: "Logged in successfully",
-      token: await userExists.generateToken(),
-      userId: userExists._id.toString(),
-    });
-  }
-}
+};
 
 module.exports = { home, register, login };

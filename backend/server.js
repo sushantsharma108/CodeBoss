@@ -3,9 +3,12 @@ const express = require("express");
 const app = express();
 const connectDB = require("./utils/db");
 const router = require("./router/auth-router");
+const errorMiddleware = require("./middlewares/error-middleware");
+
 // Middlewares:
 app.use(express.json());
 app.use("/api/auth", router);
+app.use(errorMiddleware); // Error middleware for error responses
 
 connectDB()
   .then(() => {
