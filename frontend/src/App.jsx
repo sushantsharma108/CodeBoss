@@ -1,8 +1,12 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import "./App.css";
-import Company from "./sections/CompanySection/Company";
-import Footer from "./sections/Footer/Footer";
-import Hero from "./sections/HeroSection/Hero";
-import Navbar from "./sections/Navbar/Navbar";
+import Home from "../src/pages/Home";
+import Navbar from "../src/components/Navbar/Navbar";
+import Courses from './pages/Courses';
+import Partners from './pages/Partners';
+import Contact from './pages/Contact';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 function App() {
   const companyLinks = [
     { href: "#", text: "About Us" },
@@ -44,12 +48,17 @@ function App() {
     { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-4zctaTsvtXNEBIRs8SbS9kBrb8s_bLEDmg&s" },
   ];
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
-      <Hero />
-      <Company img1={compImages1} img2={compImages2} />
-      <Footer company={companyLinks} help={helpLinks} courses={coursesLinks} social={socialLinks} />
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/partners" element={<Partners />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
